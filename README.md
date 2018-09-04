@@ -9,6 +9,7 @@ Strategy:
     A decorator around the method is added to provide syntactic sugar: the function can be called with a list/tuple of 3 numbers, or with 3 bare numbers.
     Argument checking: the function validates its input by checking that its arguments are numbers strictly higher than 0.
 
+Tests:
     A small test suite is provided: the first test verifies one instance of each triangle type. A second test verifies that the function result does not depend on the argument order (used with randomly generated triangles).
 
 
