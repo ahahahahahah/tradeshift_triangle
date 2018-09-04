@@ -1,17 +1,21 @@
 import math
 from decorators import *
+import numbers
 
-class TriangleType:
+from enum import Enum     # for enum34, or the stdlib version
+TriangleType = Enum('TriangleType', 'Scalene Isocele Equilateral')
+
+
+class TriangleTyper:
     """Helper class to decide a triangle type: Equilateral, Isocele or Scalene"""
     epsilon = 1e-6      # tolerance for equality of lengths
-
-    Scalene     = 0     # There might be an enum type in newer python versions, must check
-    Isocele     = 1
-    Equilateral = 2
 
     @staticmethod
     @list_unfolder
     def compute_type(a, b, c):
+        assert(isinstance(a, numbers.Real))
+        assert(isinstance(b, numbers.Real))
+        assert(isinstance(c, numbers.Real))
         assert(a >= 0)
         assert(b >= 0)
         assert(c >= 0)
@@ -22,7 +26,7 @@ class TriangleType:
         Dbc = math.fabs(b-c)
 
         # shorter synonym for readability
-        e = TriangleType.epsilon
+        e = TriangleTyper.epsilon
 
         # Default to scalene
         typ = TriangleType.Scalene
@@ -38,4 +42,17 @@ class TriangleType:
 
         return typ
         
+
+if __name__ == '__main__':
+    import sys
+    if len(sys.argv) != 4:
+        print("Usage: python %s <a> <b> <c>\n  where a, b, c are the triangle side lengths." % sys.argv[0])
+        sys.exit(-1)
+
+    # extract parameters and convert from string to float 
+    side_lengths = [float(sys.argv[i]) for i in range(1,4)]
+
+    # decide triangle type
+    typ = TriangleTyper.compute_type(side_lengths)
+    print(typ)
 
